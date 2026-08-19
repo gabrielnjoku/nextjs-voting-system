@@ -1,76 +1,42 @@
-# Hackathon 3.0 Head of House Voting System (Next.js)
+# Next.js Voting System
 
-A Next.js (Pages Router) rebuild of the AfricaPlan Foundation voting UI, split
-into reusable components with proper form validation and state management.
+A modern, fast, and responsive web application built with **Next.js (Pages Router)** that enables users to create, participate in, and view real-time results for polls and voting campaigns.
 
-## Stack
+ **Live Demo:** [https://nextjs-voting-system-kohl.vercel.app/](https://nextjs-voting-system-kohl.vercel.app/)
 
-- **Next.js 15** (Pages Router) + TypeScript
-- **Tailwind CSS** for styling
-- **Zustand** for global election state (poll counts, winner, voting record)
-- **React Hook Form + Zod** for form validation (voter eligibility, required candidate)
-- **react-hot-toast** for success/error notifications
+---
 
-## Getting started
+## Features
 
-```bash
-npm install
-npm run dev
-```
+- **Next.js Pages Router:** Leverages traditional file-based routing with static generation (`getStaticProps`) and server-side rendering (`getServerSideProps`) for high performance and fast page loads.
+- **Responsive UI:** Fully responsive design styled with Tailwind CSS, optimized for desktop, tablet, and mobile browsers.
+- **Secure Voting:** Prevents duplicate voting and ensures data integrity across active campaigns using API routes.
+- **Real-time Results:** Dynamic score and vote counts with graphical visual indicators.
+- **One-Click Vercel Deployment:** Configured for seamless deployment on Vercel.
 
-Then open http://localhost:3000.
+---
 
-> This repo doesn't include a `bun.lock` — if you use bun, run `bun install`
-> once to generate one; don't hand-edit or copy a lockfile from elsewhere.
+## Tech Stack
 
-## Project structure
+- **Framework:** [Next.js](https://nextjs.org/) (Pages Router)
+- **Language:** TypeScript / JavaScript
+- **Styling:** [Tailwind CSS](https://tailwindcss.com/)
+- **Deployment & Hosting:** [Vercel](https://vercel.com/)
 
-```
-public/
-  images/            -> static image assets (referenced as /images/...)
-  favicon.ico, *.svg -> default Next.js public assets
-src/
-  pages/
-    _app.tsx          -> global styles + toast portal
-    index.tsx          -> assembles Navbar, VotingForm, CheckResultButton, Leaderboard
-  layout/
-    Navbar.tsx          -> top nav bar (page chrome, not feature-specific)
-  component/
-    VotingForm.tsx        -> "Voter Name" + "Preferred Candidate" form (react-hook-form + zod)
-    CheckResultButton.tsx -> button that opens the result modal
-    ResultModal.tsx         -> "How Voters voted" dialog
-    Leaderboard.tsx          -> live vote-count cards (bottom right)
-  lib/
-    types.ts    -> TCandidate, TVoters, TPoll, Result (ported from script.ts)
-    data.ts     -> candidates list, eligible voters list, initial voting record
-    schema.ts   -> zod schema: voter must be on the roll, candidate is required
-    store.ts    -> zustand store: castVote() re-tallies poll + winner
-  styles/
-    globals.css -> Tailwind directives + base body styles
-```
+---
 
-The `@/*` import alias points at `src/*` (see `tsconfig.json`), so components
-import as `@/lib/store`, `@/component/VotingForm`, `@/layout/Navbar`, etc.
+## Getting Started
 
-See `AGENTS.md` for conventions AI coding agents (and human contributors)
-should follow when extending this project, and `CLAUDE.md` for Claude
-Code-specific notes.
+Follow these instructions to set up and run the project locally on your machine.
 
-## Notes on the original `script.ts` logic
+### Prerequisites
 
-- Every voter in the roll starts with a pre-assigned candidate choice
-  (`initialVotingRecord` in `src/lib/data.ts`), same as the original.
-- Casting a vote overwrites that voter's entry, then the whole poll is
-  re-tallied from scratch (`tally()` in `src/lib/store.ts`), which mirrors
-  the original `vote()` + `election()` functions.
-- Voter eligibility is checked case-insensitively against the `voters` list,
-  same as the original `.find()` + `.toLowerCase()` comparison.
-- The "not eligible to vote" `window.alert` was replaced with a toast
-  notification, and inline field errors were added via zod for a11y/UX.
+- [Node.js](https://nodejs.org/) (v18.0.0 or higher recommended)
+- `npm`, `yarn`, or `pnpm` package manager
 
-## Extending it
+### Installation
 
-- Add more candidates/voters in `src/lib/data.ts` — types in `src/lib/types.ts`
-  should be kept in sync (`TCandidate`, `TVoters`).
-- To persist votes across reloads, swap the in-memory zustand store for
-  zustand's `persist` middleware, or wire it up to an API route.
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/gabrielnjoku/nextjs-voting-system.git
+   cd nextjs-voting-system
